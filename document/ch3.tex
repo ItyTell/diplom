@@ -75,13 +75,130 @@ $$\hat{\beta} = (X^T X)^{-1} X^T Y$$
 
 \subsection{Результати}
 
-\section{Кластеризація та регресія}
-
-
 \section{Нейронна мережа}
-
-
 
 \subsection{Опис моделі}
 
+Нейронна мережа це модель, що складається з нейронів, які з'єднані між собою. 
+Кожен нейрон приймає певну кількість параметрів, однакову для всіх нейронів з одного шару, і видає вихідне значення. 
+Вихідне значення обчислюється, як скалярний добуток параметрів певного нейрона на вхідні значення, після чого використовується активаційна функція. 
+
+\begin{figure}[H]
+    \begin{center}
+        \scalebox{0.8}{
+            \begin{tikzpicture}[
+                roundnode/.style={circle, draw=red!60, fill=red!5, very thick, minimum size=5mm},
+                roundnode1/.style={circle, draw=blue!60, fill=blue!5, very thick, minimum size=20mm, scale= 1},
+                roundnode2/.style={circle, draw=blue!60, very thick, minimum size=10mm, scale= 2},
+                dot/.style={circle, fill=black, ultra thin, scale=0.5},
+                ]
+                %Nodes
+                \node[roundnode]    (x1)                 {$x_1$};
+                \node[roundnode]    (x2)   [below=of x1] {$x_2$};
+                
+                \node[dot]          (d1)   [below=of x2] {};
+                \node[dot]          (d2)   [below=of d1] {};
+                \node[dot]          (d3)   [below=of d2] {};
+                
+                \node[roundnode]    (xn)   [below=of d3] {$x_n$};
+                
+                
+                
+                \node[roundnode1]    (n1)   [right=of d1, xshift= 1.5cm] {$\Sigma$};
+                
+                \node[roundnode1]    (n2)   [right=of n1] {$g(*)$};
+                
+                \node[roundnode2]    (n3)   [right=of n2] {$y$};
+                
+                %Lines
+                \draw[-biggertip] (x1.east) -- (n1.west);
+                \draw[-biggertip] (x2.east) -- (n1.west);
+                
+                \draw[-biggertip] (xn.east) -- (n1.west);
+
+                \draw[-biggertip] (n1.east) -- (n2.west);
+                
+                \draw[-biggertip] (n2.east) -- (n3.west);
+                
+            \end{tikzpicture}
+            }
+            \caption{Схема нейрона}
+    \end{center}
+\end{figure}
+
+На рис. 3.1 $x_1, x_2, \dots x_n$ - вхідні значення, $\Sigma$ - скалярний добуток $(X, w)$ де $w$ параметри нейрона, $g$ - активаційна функція, $y$ - вихідне значення. 
+
+\begin{figure}[H]
+    \begin{center}
+        \scalebox{0.8}{
+            \begin{tikzpicture}[
+                roundnode/.style={circle, draw=red!60, fill=red!5, very thick, minimum size=5mm},
+                roundnode1/.style={circle, draw=blue!60, fill=blue!5, very thick, minimum size=20mm, scale= 1},
+                roundnode2/.style={circle, draw=blue!60, very thick, minimum size=20mm, scale= 1},
+                dot/.style={circle, fill=black, ultra thin, scale=0.5},
+                ]
+                %Nodes
+                \node[roundnode]    (x1)                 {$x_1$};
+                \node[roundnode]    (x2)   [below=of x1] {$x_2$};
+                
+                \node[dot]          (d1)   [below=of x2] {};
+                \node[dot]          (d2)   [below=of d1] {};
+                \node[dot]          (d3)   [below=of d2] {};
+                
+                \node[roundnode]    (xn)   [below=of d3] {$x_n$};
+                
+                
+                
+                \node[roundnode1]    (n1)   [right=of x1, xshift= 1.5cm, yshift = -1cm] {$n_1$};
+                \node[roundnode1]    (n2)   [below=of n1] {$n_2$};
+                \node[roundnode1]    (n3)   [below=of n2] {$n_3$};
+                
+                \node[roundnode1]    (n5)   [right=of n2, yshift= - 1.75cm] {$n_5$};
+                \node[roundnode1]    (n4)   [above=of n5] {$n_4$};
+
+                \node[roundnode1]    (n6)   [right=of n4, yshift= - 1.7cm] {$n_6$};
+
+                \node[roundnode2]    (n7)   [right=of n6] {$y$};
+            
+                %Lines
+                \draw[-biggertip] (x1.east) -- (n1.west);
+                \draw[-biggertip] (x2.east) -- (n1.west);
+                \draw[-biggertip] (xn.east) -- (n1.west);
+
+                \draw[-biggertip] (x1.east) -- (n2.west);
+                \draw[-biggertip] (x2.east) -- (n2.west);
+                \draw[-biggertip] (xn.east) -- (n2.west);
+
+                \draw[-biggertip] (x1.east) -- (n3.west);
+                \draw[-biggertip] (x2.east) -- (n3.west);
+                \draw[-biggertip] (xn.east) -- (n3.west);
+
+
+                \draw[-biggertip] (n1.east) -- (n4.west);
+                \draw[-biggertip] (n2.east) -- (n4.west);
+                \draw[-biggertip] (n3.east) -- (n4.west);
+
+                \draw[-biggertip] (n1.east) -- (n5.west);
+                \draw[-biggertip] (n2.east) -- (n5.west);
+                \draw[-biggertip] (n3.east) -- (n5.west);
+                
+
+                \draw[-biggertip] (n4.east) -- (n6.west);
+                \draw[-biggertip] (n5.east) -- (n6.west);
+
+
+                \draw[-biggertip] (n6.east) -- (n7.west);
+
+
+            \end{tikzpicture}
+            }
+            \caption{Схема нейрона}
+    \end{center}
+\end{figure}
+
+
+
+
+    
+    
 \subsection{Результати}
